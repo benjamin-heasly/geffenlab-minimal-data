@@ -1,0 +1,19 @@
+# This environment should be good for running analyses here in this repo.
+# If a dependency is missing, let's add it here!
+#
+# To install: conda env create -f environment.yml
+# To use: conda activate geffen-analysis
+name: geffen-analysis
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip=24.0
+  - pip:
+    - numpy
+    - scipy
+    - pandas
+    - matplotlib
+    - requests
+    - scikit-learn
