@@ -2,7 +2,7 @@
 # If a dependency is missing, let's add it here!
 #
 # To install: conda env create -f environment.yml
-# To use: conda activate geffen-analysis
+# To use: conda activate minimal-dataset
 name: minimal-dataset
 channels:
   - conda-forge

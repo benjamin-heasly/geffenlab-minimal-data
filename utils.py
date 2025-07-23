@@ -9,6 +9,7 @@ from scipy.io import loadmat, savemat
 def locate_input_paths(
     behavior_root: str,
     spikeglx_root: str,
+    tprime_root: str,
     trial_events_pattern: str,
     behavior_mat_pattern: str = '*.mat',
     behavior_txt_pattern: str = '*.txt',
@@ -22,9 +23,11 @@ def locate_input_paths(
     input_paths["behavior_details"] = list(behavior_path.glob(behavior_mat_pattern))[0]
 
     spikeglx_path = Path(spikeglx_root)
-    input_paths["trial_events"] = list(spikeglx_path.glob(trial_events_pattern))[0]
     input_paths["nidq_bin_file"] = list(spikeglx_path.glob(spikeglx_nidq_pattern))[0]
     input_paths["ap_bin_file"] = list(spikeglx_path.glob(spikeglx_ap_pattern))[0]
+
+    tprime_path = Path(tprime_root)
+    input_paths["trial_events"] = list(tprime_path.glob(trial_events_pattern))[0]
 
     print(f"Found input paths: {input_paths}")
 

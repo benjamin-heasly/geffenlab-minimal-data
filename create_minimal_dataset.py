@@ -9,18 +9,19 @@ from utils import locate_input_paths, event_time_range, extract_bin, extract_beh
 #   https://docs.python.org/3/library/argparse.html
 #
 # Usage:
-#   python create_minimal_dataset.py minimal_out/ behavior_in/ spikeglx_in/ *trial_events.txt start_trial end_trial padding_seconds
+#   python create_minimal_dataset.py minimal_out/ behavior_in/ spikeglx_in/ tprime_in/ *trial_events.txt start_trial end_trial padding_seconds
 
 minimal_dir = sys.argv[1]
 
 behavior_dir = sys.argv[2]
 spikeglx_dir = sys.argv[3]
-trial_events_pattern = sys.argv[4]
-input_paths = locate_input_paths(behavior_dir, spikeglx_dir, trial_events_pattern)
+tprime_dir = sys.argv[4]
+trial_events_pattern = sys.argv[5]
+input_paths = locate_input_paths(behavior_dir, spikeglx_dir, tprime_dir, trial_events_pattern)
 
-start_trial = int(sys.argv[5])
-end_trial = int(sys.argv[6])
-trial_padding_seconds = float(int(sys.argv[6]))
+start_trial = int(sys.argv[6])
+end_trial = int(sys.argv[7])
+trial_padding_seconds = float(sys.argv[8])
 
 # Extract relevant lines from the behavior .txt file.
 behavior_events_in = input_paths["behavior_events"]
@@ -48,10 +49,11 @@ trial_events_path = input_paths["trial_events"]
 
 # Extract relevant samples from the nidq .bin file.
 nidq_bin_in = input_paths["nidq_bin_file"]
-nidq_bin_out = Path(minimal_dir, "ecephys", nidq_bin_in.relative_to(spikeglx_dir))
+ecephys_base = nidq_bin_in.parent.parent
+nidq_bin_out = Path(minimal_dir, "ecephys", nidq_bin_in.relative_to(ecephys_base))
 extract_bin(nidq_bin_in, nidq_bin_out, start_time, end_time)
 
 # Extract relevant samples from the ap .bin file.
 ap_bin_in = input_paths["ap_bin_file"]
-ap_bin_out = Path(minimal_dir, "ecephys", ap_bin_in.relative_to(spikeglx_dir))
+ap_bin_out = Path(minimal_dir, "ecephys", ap_bin_in.relative_to(ecephys_base))
 extract_bin(ap_bin_in, ap_bin_out, start_time, end_time)

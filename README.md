@@ -76,17 +76,19 @@ Use `create_minimal_dataset.py` to extract a few trial's-worth of data from the 
 The general usage is:
 
 ```
-python create_minimal_dataset.py minimal_out/ behavior_in/ spikeglx_in/ *trial_events.txt start_trial end_trial padding_seconds
+python create_minimal_dataset.py minimal_out/ behavior_in/ spikeglx_in/ tprime_in/ *trial_events.txt start_trial end_trial padding_seconds
 ```
 
-This example would extract at trial/stim events 0-3, plus 1.5 seconds of padding on each side:
+This example would extract at trial/stim events 5-13, plus 1.5 seconds of padding on each side:
+
 
 ```
 python create_minimal_dataset.py \
-  /home/ninjaben/codin/geffen-lab-data/minimal-ecephys \
-  /home/ninjaben/codin/geffen-lab-data/raw-ecephys/AS20_03112025_trainingSingle6Tone2024_behavior \
-  /home/ninjaben/codin/geffen-lab-data/raw-ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0 \
-  *nidq.xd_8_3_0.txt 0 3 1.5
+  /home/ninjaben/codin/geffen-lab-data/data/AS20-minimal2/03112025 \
+  /home/ninjaben/codin/geffen-lab-data/data/AS20/03112025/behavior \
+  /home/ninjaben/codin/geffen-lab-data/data/AS20/03112025/ecephys/AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0 \
+  /home/ninjaben/codin/geffen-lab-data/other/old-ecephys/home/ninjaben/ecephys_output/catgt_AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0 \
+  *nidq.xd_8_3_0.txt 5 13 1.5
 ```
 
 The output should look like this:
@@ -97,11 +99,12 @@ geffen-lab-data/minimal-ecephys/
 │   ├── AS20_031125_trainingSingle6Tone2024_0_39.mat
 │   └── AS20_031125_trainingSingle6Tone2024_0_39.txt
 └── ecephys/
-    ├── AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.nidq.bin
-    ├── AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.nidq.meta
-    └── AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/
-        ├── AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.imec0.ap.bin
-        └── AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.imec0.ap.meta
+    └──AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0
+        ├── AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.nidq.bin
+        ├── AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.nidq.meta
+        └── AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_imec0/
+            ├── AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.imec0.ap.bin
+            └── AS20_03112025_trainingSingle6Tone2024_Snk3.1_g0_t0.imec0.ap.meta
 ```
 
 The output subdirs `behavior` and `ecephys` should match the data organization expected by [aind-ephys-pipeline (kilosort4)](https://codeocean.allenneuraldynamics.org/capsule/9352933/tree).
