@@ -209,13 +209,19 @@ def extract_behavior_events(
 
                 # The first tuple element might be a decimal trial number.
                 trial_number = int(parts[0]) if parts[0].isdecimal() else None
+                trial_index = trial_number - 1 if trial_number is not None else -1
 
                 if trial_number is None:
                     # Keep header lines that have no trial number.
                     file_out.write(line_in)
-                elif start_trial <= trial_number and trial_number <= end_trial:
-                    # Keep lines relevant to the given trial range.
-                    file_out.write(line_in)
+                elif start_trial <= trial_index and trial_index <= end_trial:
+                    # Keep lines relevant to the given trial range -- which is zero-based.
+                    # Shift trial number to make the first in the range be trial number 0001.
+                    shifted_trial_number = trial_index - start_trial + 1
+                    trial_part = f"{shifted_trial_number:>04d}"
+                    data_part = " ".join(parts[1:])
+                    line_out = f"{trial_part} {data_part}"
+                    file_out.write(line_out)
                 elif trial_number == 0:
                     # Keep footer lines for trial zero.
                     file_out.write(line_in)
